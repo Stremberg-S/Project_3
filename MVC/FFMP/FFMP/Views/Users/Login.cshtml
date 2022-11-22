@@ -1,0 +1,23 @@
+﻿@model FFMP.Data.User
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="center2">
+    <form asp-action="Login" asp-route-login="@Model?.Login" asp-route-password="@Model?.Password">
+        <div class="input-wrapper">
+            <input asp-for="Login" class="form-control" placeholder="Username" />
+            <span asp-validation-for="Login" class="text-danger"></span>
+        </div>
+        <div class="input-wrapper">
+            <input asp-for="Password" class="form-control" type="password" placeholder="Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="input-wrapper">
+            <input type="submit" value="Login" class="btn btn-primary" />
+            <div>
+                @ViewBag.Message
+            </div>
+        </div>
+    </form>
+</div>

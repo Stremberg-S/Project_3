@@ -1,0 +1,35 @@
+﻿@model FFMP.Data.User
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_NavbarForUsers");
+    }
+    }
+
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="EditForUser" asp-route-id="@Model?.Login">Edit account information</a> |
+    <a asp-action="Index" asp-route-id="@Model?.Login">Back to main</a>
+</div>

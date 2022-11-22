@@ -1,0 +1,20 @@
+﻿@model FFMP.Data.User
+
+@{
+    ViewData["Title"] = "User View";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_NavbarForUsers");
+    }
+    }
+
+    <div class="center2">
+        @*<div class="col-md-4">*@
+<div class="text-center">
+                <h1 class="display-6 align-middle">Welcome to<br /> Factor Facility Management Program<br/> @Html.DisplayFor(modelItem => modelItem.Name)</h1>
+    </div>
+    </div>
+        @*<a asp-action="Details" asp-route-id="@Model.Login">Click to see your information</a>*@ 
+@*</div>*@
