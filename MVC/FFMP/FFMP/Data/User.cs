@@ -29,7 +29,7 @@ namespace FFMP.Data
         [Display(Name = "User Login")]
         public string Login { get; set; } = null!;
         private string _password;
-        [ScaffoldColumn(false)]
+        [MetaEntityAttr(Editable = false, ShowOnView = false, ShowInLookup = false)]
         public string Password
         {
             get

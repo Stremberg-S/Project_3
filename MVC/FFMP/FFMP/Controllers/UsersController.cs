@@ -57,7 +57,6 @@ namespace FFMP.Controllers
             else
                 ViewBag.Message = "Deactivated login information";
             return View("Login");
-
         }
 
 
