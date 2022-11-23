@@ -355,4 +355,4 @@ MigrationBackup/
 # SQL
 *prj3_db_inserts.sql
 *prj3 db_model.mwb.bak
-*db_utils.sql
+**db_utils.sql
