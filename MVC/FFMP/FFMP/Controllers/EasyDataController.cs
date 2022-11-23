@@ -1,8 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using FFMP.Data;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using NuGet.Protocol.Plugins;
 
 namespace FFMP.Controllers;
 
@@ -28,6 +38,6 @@ public class EasyDataController : Controller
             _logger.LogInformation($"{entity} page");
         }
 
-        return View();
+        return View(entity);
     }
 }

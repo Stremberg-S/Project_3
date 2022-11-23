@@ -36,14 +36,24 @@ namespace FFMP.Controllers
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Login == login && u.Password == hashPassword!);
             if (user == null)
             {
-                ViewBag.Message = "Wrong username or password";
                 return View("Login");
-
             }
             if (user.Admin == true && user.Active == true)
+            {
+                user.LastLogin = DateTime.Now;
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+
                 return View("AdminLanding/Index");
+            }
             else if (user.Admin == false && user.Active == true)
-                return RedirectToAction(nameof(Index), new { id = login });
+            {
+                user.LastLogin = DateTime.Now;
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+
+                return View("UserLanding/Index");
+            }
             else
                 ViewBag.Message = "Deactivated login information";
             return View("Login");
@@ -57,6 +67,25 @@ namespace FFMP.Controllers
             return _context.Users != null ?
                         View(await _context.Users.ToListAsync()) :
                         Problem("Entity set 'project_3Context.Users'  is null.");
+        }
+
+        public async Task<IActionResult> IndexUsers(string SortOrder)
+        {
+            var users = await _context.Users.ToListAsync();
+
+            ViewData["NameSortParam"] = String.IsNullOrEmpty(SortOrder) ? "name_sort" : "";
+            ViewData["CreatedSortParam"] = SortOrder == "" ? "created_sort" : "created_sort";
+
+            switch (SortOrder)
+            {
+                case "name_sort":
+                    users = await _context.Users.OrderBy(x => x.Name).ToListAsync();
+                    break;
+                case "created_sort":
+                    users = await _context.Users.OrderBy(x => x.Created).ToListAsync();
+                    break;
+            }
+            return View(users);
         }
 
         // GET: User/Details/5
@@ -74,7 +103,7 @@ namespace FFMP.Controllers
                 return NotFound();
             }
 
-            return View(user);
+            return View();
         }
 
         // GET: User/Create
@@ -88,13 +117,15 @@ namespace FFMP.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Login,Password,Created,LastLogin,Admin,Active")] User user)
+        public async Task<IActionResult> Create([Bind($"Name,Login,Password,Created,LastLogin,Admin,Active")] User user)
         {
             if (ModelState.IsValid)
             {
+                user.Password = HashSh1(user.Password);
+
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexUsers));
             }
             return View(user);
         }
