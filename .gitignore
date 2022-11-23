@@ -351,3 +351,8 @@ MigrationBackup/
 
 
 .DS_Store
+
+# SQL
+*prj3_db_inserts.sql
+*prj3 db_model.mwb.bak
+*db_utils.sql
